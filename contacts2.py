@@ -2,9 +2,15 @@ import sqlite3
 
 db =sqlite3.connect("contacts.sqlite")
 
-update_sql = "UPDATE contacts SET email = 'update@update.com'"   # WHERE contacts.phone = 1234"
+new_email = "newemail``update@update.com"
+phone = input("Please enter the phone number ")
+
+# update_sql = f"UPDATE contacts SET email = '{new_email}' WHERE phone = {phone}"
+update_sql = f"UPDATE contacts SET email = ? WHERE phone = ?"
+print(update_sql)
+
 update_cursor = db.cursor()
-update_cursor.execute(update_sql)
+update_cursor.execute(update_sql, (new_email, phone))
 print(f"{update_cursor.rowcount} rows updated")
 
 print()
