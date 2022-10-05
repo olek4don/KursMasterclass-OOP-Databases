@@ -11,7 +11,7 @@ def getint(prompt):
         except: # Should really be except ValueError:
             print("Invalid number entered, please try again.")
         finally:
-            print("The finally clause always executes")
+            print("\nThe finally clause always executes")
 
 first_number = getint("Please enter the first number ")
 second_number = getint("Please enter the second number ")
