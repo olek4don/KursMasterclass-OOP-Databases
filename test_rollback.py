@@ -1,6 +1,7 @@
 import sqlite3 
 import datetime
 import pytz
+import pytest
 
 db = sqlite3.connect("accounts.db", detect_types=sqlite3.PARSE_DECLTYPES)
 db.execute("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY NOT NULL, balance INTEGER NOT NULL)")
@@ -15,8 +16,8 @@ class Account(object):
 
     @staticmethod
     def _current_time():
-        return pytz.utc.localize(datetime.datetime.utcnow())
-        # return 1
+        # return pytz.utc.localize(datetime.datetime.utcnow())
+        return 1
         
         # local_time = pytz.utc.localize(datetime.datetime.utcnow())
         # return local_time.astimezone()
@@ -48,8 +49,8 @@ class Account(object):
             db.execute("INSERT INTO history VALUES (?, ?, ?)",
                     (deposit_time, self.name, amount))
         except sqlite3.Error:
-            db.rollback()
-            # pass
+            # db.rollback()
+            pass
         else:
             db.commit()
             self._balance = new_balance
@@ -86,19 +87,29 @@ class Account(object):
         print(f"Balance on account {self.name} is {self._balance / 100:.2f}")
 
 
-if __name__ == '__main__':
-    john = Account("John")
-    john.deposit(1010)
-    john.deposit(10)
-    john.deposit(10)
-    john.withdraw(30)
-    john.withdraw(0)
-    john.show_balance()
+class TestClass:
+    def test_one(self):
+        john = Account("John")
+        assert john.deposit(1010)
+        assert john.deposit(10)
+        assert john.deposit(10)
+        assert john.withdraw(30)
+        assert john.withdraw(0)
+        assert john.show_balance()        
 
-    terry = Account("TerryJ")
-    graham = Account("Graham", 9000)
-    eric = Account("Eric", 7000)
-    michael = Account("Michael")
-    terryG = Account("TerryG")
+# if __name__ == '__main__':
+#     john = Account("John")
+#     john.deposit(1010)
+#     john.deposit(10)
+#     john.deposit(10)
+#     john.withdraw(30)
+#     john.withdraw(0)
+#     john.show_balance()
 
-    db.close()
+#     terry = Account("TerryJ")
+#     graham = Account("Graham", 9000)
+#     eric = Account("Eric", 7000)
+#     michael = Account("Michael")
+#     terryG = Account("TerryG")
+
+#     db.close()
