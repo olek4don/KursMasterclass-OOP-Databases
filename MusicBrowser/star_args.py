@@ -24,6 +24,11 @@ def print_backwards(*args, **kwargs):
         print(word[::-1], end=sep_character, **kwargs)
     print(args[0][::-1], end=end_character, **kwargs)       # and print the first word separately
     # print(end=end_character)  # which means we don't need this line
+
+
+def backwards_print(*args, **kwargs):
+    sep_character = kwargs.pop('sep', ' ')
+    print(sep_character.join(word[::-1] for words in args[::-1]), **kwargs)
         
 with open("backwards.txt", "w") as backwards:
     print_backwards("hello", "planet", "earth", "take", "me", "to", "your", "leader", end='\n')
