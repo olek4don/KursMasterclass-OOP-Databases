@@ -46,6 +46,9 @@ artistList = Scrollbox(mainWindow)
 artistList.grid(row=1, column=0, sticky='nsew', rowspan=2, padx=(30, 0))
 artistList.config(border=2, relief='sunken')
 
+for artist in conn.execute("SELECT artists.name FROM artists ORDER BY artists.name"):
+    artistList.insert(tkinter.END, artist[0])
+
 # artistScroll = tkinter.Scrollbar(mainWindow, orient=tkinter.VERTICAL, command=artistList.yview)
 # artistScroll.grid(row=1, column=0, sticky='nse', rowspan=2)
 # artistList['yscrollcommand'] = artistScroll.set
