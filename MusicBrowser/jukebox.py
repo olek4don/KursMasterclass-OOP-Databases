@@ -33,6 +33,20 @@ def get_albums(event):
     for row in conn.execute("SELECT albums.name FROM albums WHERE albums.artist = ? ORDER BY albums.name", artist_id):
         alist.append(row[0])
     albumLV.set(tuple(alist))
+    songLV.set(("Choose an album",))
+    
+
+def get_songs(event):
+    lb = event.widget
+    index = int(lb.curselection()[0])
+    album_name = lb.get(index),
+    
+    # get the album ID from database row
+    album_id = conn.execute("SELECT albums._id FROM albums WHERE albums.name=?", album_name).fetchone()
+    alist = []
+    for x in conn.execute("SELECT songs.title FROM SONGS WHERE SONGS.album=? ORDER BY songs.track", album_id):
+        alist.append(x[0])
+    songLV.set(tuple(alist))
     
         
 mainWindow = tkinter.Tk()
@@ -74,6 +88,8 @@ albumLV.set(("Choose an artist",))
 albumList = Scrollbox(mainWindow, listvariable=albumLV)
 albumList.grid(row=1, column=1, sticky='nsew', padx=(30, 0))
 albumList.config(border=2, relief='sunken')
+
+albumList.bind('<<ListboxSelect>>', get_songs)
 
 # albumScroll = tkinter.Scrollbar(mainWindow, orient=tkinter.VERTICAL, command=albumList.yview)
 # albumScroll.grid(row=1, column=1, sticky='nse', rowspan=2)
