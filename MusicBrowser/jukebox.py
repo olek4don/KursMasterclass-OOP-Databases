@@ -35,7 +35,7 @@ class DataListBox(Scrollbox):
         self.table = table
         self.field = field
 
-        self.bind('<<ListboxSelect>>', self.on_select)
+        self.bind('<Double-1>', self.on_select)
         
         self.sql_select = "SELECT " + self.field + ", _id" + " FROM " + self.table
         if sort_order:
